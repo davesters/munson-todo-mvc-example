@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Node-MVC • TodoMVC Example</title>
+		
+		<link rel="stylesheet" href="/css/index.css">
+	</head>
+	<body>
+		<section class="todoapp">
+			<header class="header">
+				<h1>todos</h1>
+				{% block header %}{% endblock %}
+			</header>
+
+			{% block body %}{% endblock %}
+
+		</section>
+
+		<footer class="info">
+			<p>Click on the text to edit a todo.</p>
+			<p>
+				Original template by <a href="http://github.com/sindresorhus">Sindre Sorhus</a>
+				<br /> Reworked by <a href="http://github.com/olle/serverside-todomvc">Olle Törnström</a>
+			</p>
+			<p>
+				Adapted for <a href="http://github.com/davesters/node-mvc">Node MVC</a>
+			</p>
+		</footer>
+	</body>
+</html>

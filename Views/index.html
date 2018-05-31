@@ -1,0 +1,57 @@
+{% extends "layout/main.html" %}
+
+{% block header %}
+<form action="/todos" method="post">
+	<input type="text" name="title" placeholder="What needs to be done?" autocomplete="off" class="new-todo">
+</form>
+{% endblock %}
+
+{% block body %}
+{% if todos.length > 0 %}
+<section class="main">
+	<ul class="todo-list">
+		{% for todo in todos %}
+		<li {% if todo.completed %}class="completed"{% endif %}>
+			{% if todo.isEditing %}
+			<form action="todos/{{todo.id}}" method="post">
+				<input type="hidden" name="method" value="put" />
+				<input type="text" name="title" placeholder="{{todo.title}}" value="{{todo.title}}" autofocus="autofocus" autocomplete="off" class="edit" />
+			</form>
+			{% else %}
+			<div class="view">
+				<form action="todos/{{todo.id}}/status" method="post" class="item-toggle-completed">
+					{% if todo.completed %}
+					<input class="toggle" type="checkbox" checked>
+					{% endif %}
+					<button class="toggle checked"></button>
+				</form>
+
+				{% if todo.completed %}
+				<label><span class="item-text">{{todo.title}}</span></label>
+				{% else %}
+				<label><a href="/?action=edit&id={{todo.id}}" class="item-text">{{todo.title}}</a></label>
+				{% endif %}
+
+				<form action="/todos/{{todo.id}}" method="post" class="item-delete">
+					<input type="hidden" name="method" value="delete" />
+					<button class="destroy"></button>
+				</form>
+			</div>
+			{% endif %}
+		</li>
+		{% endfor %}
+	</ul>
+</section>
+{% endif %}
+
+{% if count > 0 %}
+<footer class="footer">
+	<span class="todo-count"><strong>{{activeCount}}</strong> item|s left</span>
+	<ul class="filters">
+		<li><a href="/?filter=all" {% if filter === 'all' %}class="selected"{% endif %}>All</a></li>
+		<li><a href="/?filter=active" {% if filter === 'active' %}class="selected"{% endif %}>Active</a></li>
+		<li><a href="/?filter=completed" {% if filter === 'completed' %}class="selected"{% endif %}>Completed</a></li>
+	</ul>
+</footer>
+{% endif %}
+{% endblock %}
